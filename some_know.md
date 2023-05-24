@@ -24,3 +24,5 @@ key_padding_mask的形状大小为（N,S），对应这个例子，key_padding_m
 值得说明的是，key_padding_mask本质上是遮住key这个位置的值（置0），但是<PAD> token本身，也是会做qkv的计算的，以第三行数据的第三个位置为例，它的q是<PAD>的embedding，k和v分别各是第一个的‘a’和第二个的‘b’，它也会输出一个embedding。
 
 所以你的模型训练在transformer最后的output计算loss的时候，还需要指定ignoreindex=pad_index。以第三行数据为例，它的监督信号是[3205,1890,0,0]，pad_index=0 。如此一来，即便位于<PAD>的transformer会疯狂的和有意义的position做qkv，也会输出embedding，但是我们不算它的loss，任凭它各种作妖。
+    
+总结: 也就是说通过pad补充固定长度后，pad也会做qkv, 但是只要我们将pad对应的pad_index指定为ignoreindex，算loss的时候，不会给他算loss
