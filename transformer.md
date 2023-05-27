@@ -4,3 +4,6 @@ seq2seq 序列到序列
 2. encoder/decoder
 encoder/decoder这种网络类型可以实现seq2seq, 就是实现seq2seq的一种手段
 3. attention
+
+
+注意力机制其实就是加权平均
